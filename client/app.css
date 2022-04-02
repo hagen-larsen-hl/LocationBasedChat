@@ -25,21 +25,35 @@
 }
 
 .side-bar {
-  height: 100vh;
   background-color: var(--dark-background);
   padding: 16px;
   display: flex;
-  flex-direction: column;
+  width: auto;
+}
+
+.header {
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  width: 20%;
+}
+
+.sub-header {
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  width: 100%;
 }
 
 .room {
   background-color: var(--primary-color);
-  width: 96px;
+  width: 192px;
   height: 96px;
   border-radius: 8px;
   color: black;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +110,7 @@
 .button-container button:nth-of-type(1) {
   background-color: white;
   color: black;
-  margin-right: 8px;
+  margin: 8px;
 }
 
 .button-container button:nth-of-type(1):hover {
