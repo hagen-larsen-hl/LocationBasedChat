@@ -32,6 +32,8 @@ export const useMessages = (chatRoom) => {
         setMessages(messages);
       });
       return () => {
+        setMessages([]);
+        messagesRef.current = [];
         socket.off('message');
         socket.off('initial-messages');
         socket.disconnect();

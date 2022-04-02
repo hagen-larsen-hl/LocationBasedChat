@@ -25,18 +25,30 @@ export const ChatRoom = () => {
     setLoading(false);
   }, [id]);
 
+  const sendAndClear = (contents, user) => {
+    sendMessage(contents, user);
+    setContents("");
+  };
+
   if (loading) return 'Loading...';
 
   return (
     <div className="chat-container">
-      <div>
+      <div className="chatbox">
+        <div className="justify-content-center">
+        <h1 className="room-name">{chatRoom.name}</h1>
+        </div>
         {messages.map((message) => (
           <Message key={message.id} message={message} />
         ))}
       </div>
-      <div>
-        <input type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
-        <Button onClick={() => sendMessage(contents, user)}>Send</Button>
+      <div className="chatbox flex">
+        <div className="w-3/4 m-3">
+          <input className="input" type="text" value={contents} onChange={(e) => setContents(e.target.value)} />
+        </div>
+        <div className="w-1/5 m-3">
+          <Button onClick={() => sendAndClear(contents, user)}>Send</Button>
+        </div>
       </div>
     </div>
   );

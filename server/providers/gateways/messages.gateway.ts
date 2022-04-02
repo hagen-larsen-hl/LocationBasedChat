@@ -29,7 +29,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
   @WebSocketServer()
   server: Server;
 
-  constructor(private messagesService: MessagesService, private jwtService: JwtService) {}
+  constructor(private jwtService: JwtService) {}
 
   async handleConnection(client: any, ...args: any[]) {
     try {
@@ -38,10 +38,7 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
       this.jwtService.parseToken(jwt);
       console.log(client.handshake.query);
       client.join(client.handshake.query.chatRoomId as unknown as string);
-      const messages = await this.messagesService.findAllForRoom(client.handshake.query.chatRoomId);
-      client.emit('initial-messages', messages);
     } catch (e) {
-      throw new WsException('Invalid token');
     }
   }
 
@@ -57,11 +54,11 @@ export class MessagesGateway implements OnGatewayConnection, OnGatewayDisconnect
   ) {
     console.log(payload);
     let message = new Message();
+    message.id = Date.now();
     message.contents = payload.contents;
     message.userName = payload.userName;
     message.userId = jwtBody.userId;
     message.chatRoomId = parseInt(client.handshake.query.chatRoomId as unknown as string, 10);
-    message = await this.messagesService.create(message);
     this.server.to(`${message.chatRoomId}`).emit('message', message);
   }
 }
